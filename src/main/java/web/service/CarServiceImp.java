@@ -5,6 +5,7 @@ import web.model.Car;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CarServiceImp implements CarService {
@@ -22,16 +23,6 @@ public class CarServiceImp implements CarService {
 
     @Override
     public List<Car> showCars(int count) {
-        List<Car> result = new ArrayList<>();
-        if(count > 0 && count < 5) {
-            for (int i = 0; i < count; i++) {
-                result.add(car.get(i));
-            }
-        } else {
-            result.addAll(car);
-        }
-        return result;
+        return car.stream().limit(count > 0 && count < 5 ? count : 5).collect(Collectors.toList());
     }
-
-
 }
